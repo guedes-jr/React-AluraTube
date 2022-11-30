@@ -18,6 +18,14 @@ export const StyledTimeline = styled.div`
         max-width: 210px;
         height: auto;
     };
+    section::-webkit-scrollbar {
+       width: 6px;
+    };
+
+    section::-webkit-scrollbar-thumb {
+        background: darkgray;
+        border-radius: 5rem;
+    };
     section {
         width: 100%;
         padding: 0;

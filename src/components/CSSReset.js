@@ -5,16 +5,32 @@ export const CSSReset = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        scrollbar-gutter: stable both-edges;
     };
+
     body {
         font-family: sans-serif;
         background-color: ${({ theme }) => theme.backgroundBase};
         color: ${({ theme }) => theme.textColorBase};
     };
+    html::-webkit-scrollbar {
+       width: 6px;
+    };
+
+    html::-webkit-scrollbar-thumb {
+        background: darkgray;
+        border-radius: 5rem;
+    };
+
+    html::-webkit-scrollbar-thumb:hover {
+        background: gray;
+    };
+
     html {
         display: flex;
         flex-direction: column;
         min-height: 100%;
+        overflow-x: hidden;
     };
     body {
         display: flex;

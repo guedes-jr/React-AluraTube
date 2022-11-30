@@ -1,41 +1,31 @@
 import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
+import { CSSReset } from "../src/components/CSSReset"
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 import { videoService } from "../src/services/videoService";
+import { redirect } from "next/dist/server/api-utils";
 
 function HomePage() {
-  const service = videoService();
-  const [valorDoFiltro, setValorDoFiltro] = React.useState("");
-  const [playlists, setPlaylists] = React.useState({});
-  React.useEffect(() => {
-    service
-      .getAllVideos()
-      .then((dados) => {
-        console.log(dados.data);
-        const novasPlaylists = { ...playlists };
-        dados.data.forEach((video) => {
-          if (!novasPlaylists[video.playlist]) {
-            novasPlaylists[video.playlist] = [];
-          };
-          novasPlaylists[video.playlist].push(video);
-        });
-        setPlaylists(novasPlaylists);
-      });
-  },
-    [],
-  );
+  const estilosDaHomePage = {
+    // backgroundColor: redirect;
+  }
+  const [valorDoFiltro, setValorDoFiltro] = React.useState("")
+
   return (
     <>
+      <CSSReset />
       <div style={{
         display: "flex",
         flexDirection: "column",
-        flex: 1,
+        flex: 1
       }}>
         <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
         <Header />
-        <Timeline searchValue={valorDoFiltro} playlists={playlists}>Conteúdo</Timeline>
+        <Timeline searchValue={valorDoFiltro} playlists={config.playlists}>
+          Conteúdo
+        </Timeline>
       </div>
     </>
   );
@@ -95,7 +85,7 @@ function Timeline({ searchValue, ...propriedades }) {
                 .filter((video) => {
                   const titleNormalized = video.title.toLowerCase();
                   const searchValueNormalized = searchValue.toLowerCase();
-                  return titleNormalized.includes(searchValueNormalized);
+                  return titleNormalized.includes(searchValueNormalized)
                 })
                 .map((video) => {
                   return (
