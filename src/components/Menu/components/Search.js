@@ -34,7 +34,7 @@ const StyledSearch = styled.div`
 `;
 
 export default function Search({ valorDoFiltro, setValorDoFiltro }) {
-  const ValorDaBusca = valorDoFiltro;
+  const ValorDaBusca = valorDoFiltro ;
   const setValorDaBusca = setValorDoFiltro;
   return (
     <StyledSearch>

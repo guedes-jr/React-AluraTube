@@ -5,13 +5,26 @@ import { CSSReset } from "../src/components/CSSReset"
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 import { videoService } from "../src/services/videoService";
-import { redirect } from "next/dist/server/api-utils";
 
 function HomePage() {
-  const estilosDaHomePage = {
-    // backgroundColor: redirect;
-  }
-  const [valorDoFiltro, setValorDoFiltro] = React.useState("")
+  const service = videoService();
+  const [valorDoFiltro, setValorDoFiltro] = React.useState("");
+  const [playlists, setPlaylists] = React.useState({});
+
+  React.useEffect(() => {
+    service
+      .getAllVideos()
+      .then((dados) => {
+        console.log(dados.data);
+        const novasPlaylists = { ...playlists }
+        dados.data.forEach((video) => {
+          if (!novasPlaylists[video.playlist]) novasPlaylists[video.playlist] = []; novasPlaylists[video.playlist].push(video);
+        })
+        setPlaylists(novasPlaylists);
+      });
+  }, []);
+
+  console.log("Playlists pronto", playlists);
 
   return (
     <>
@@ -23,7 +36,7 @@ function HomePage() {
       }}>
         <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
         <Header />
-        <Timeline searchValue={valorDoFiltro} playlists={config.playlists}>
+        <Timeline searchValue={valorDoFiltro} playlists={playlists}>
           Conteúdo
         </Timeline>
       </div>
@@ -83,7 +96,7 @@ function Timeline({ searchValue, ...propriedades }) {
             <div>
               {videos
                 .filter((video) => {
-                  const titleNormalized = video.title.toLowerCase();
+                  const titleNormalized = video.titulo.toLowerCase();
                   const searchValueNormalized = searchValue.toLowerCase();
                   return titleNormalized.includes(searchValueNormalized)
                 })
@@ -91,7 +104,7 @@ function Timeline({ searchValue, ...propriedades }) {
                   return (
                     <a key={video.url} href={video.url}>
                       <img src={video.thumb} />
-                      <span>{video.title}</span>
+                      <span>{video.titulo}</span>
                     </a>
                   );
                 })

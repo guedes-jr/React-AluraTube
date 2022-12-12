@@ -21,14 +21,20 @@ const theme = {
   },
 };
 
+//_app.js --> Definições globais do NextJS
+//ThemeProvider --> Prover o tema para a app toda
+//ColorModeProvider --> Prove o state de light ou dark mode para todo mundo 
+
 function ProviderWrapper(props) {
   return (
-    <ColorModeProvider initialMode={"light"}>{props.children}</ColorModeProvider>
-  );
-};
+    <ColorModeProvider initialMode={"dark"}>
+      {props.children}
+    </ColorModeProvider>
+  )
+}
 
 function Root({ Component, pageProps }) {
-  const contexto = React.useContext(ColorModeContext);
+  const contexto = React.useContext(ColorModeContext)
   return (
     <ThemeProvider theme={theme[contexto.mode]}>
       <CSSReset />
@@ -43,5 +49,5 @@ export default function _App(props) {
     <ProviderWrapper>
       <Root {...props} />
     </ProviderWrapper>
-  );
-};
+  )
+}
