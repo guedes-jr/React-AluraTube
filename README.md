@@ -71,7 +71,7 @@ Alterando as seguintes variáveis:
 
 ![img3](/document/img/img-03.png)
 
-## :plus: Funcionalidades
+## :ballot_box_with_check: Funcionalidades
 
 - Basicamente o site apresenta uma lista de playlists recebida a partir dos dados no supabase que age como o banco de dados da aplicação porém de forma online;
 
